@@ -16,18 +16,22 @@ Including another URLconf
 """
 import os
 
+
+
+
 # Установите SECRET_KEY вручную (не рекомендуется для продакшн)
 os.environ['SECRET_KEY'] = 'NQBghmmXmpGd-6gzhWD20PmAeZGSjdjOscBHkkBwptd5NFR9Wi97KHKLKRZrR78aTjE'
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 print(SECRET_KEY)
 
+
 from django.contrib import admin
 from django.urls import path, include
-
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -41,6 +45,7 @@ schema_view = get_schema_view(
    public=True,
    permission_classes=(permissions.AllowAny,),
 )
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),

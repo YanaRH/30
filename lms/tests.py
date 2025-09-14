@@ -1,9 +1,10 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-
 from lms.models import Course, Lesson, Subscription
 from users.models import User
+
+
 
 
 class LessonTestCase(APITestCase):
@@ -14,12 +15,14 @@ class LessonTestCase(APITestCase):
         self.lesson = Lesson.objects.create(title="Урок_1", description="Введение", course=self.course, owner=self.user)
         self.client.force_authenticate(user=self.user)
 
+
     def test_lesson_retrieve(self):
         url = reverse("lms:lesson_detail", args=(self.lesson.pk,))
         response = self.client.get(url)
         data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data.get("title"), self.lesson.title)
+
 
     def test_lesson_create(self):
         url = reverse("lms:lesson_create")
@@ -32,6 +35,7 @@ class LessonTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Lesson.objects.filter(title="Урок_10").count(), 1)
 
+
     def test_lesson_update(self):
         url = reverse("lms:lesson_update", args=(self.lesson.pk,))
         data = {
@@ -42,11 +46,13 @@ class LessonTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data.get("title"), "Урок_10")
 
+
     def test_lesson_delete(self):
         url = reverse("lms:lesson_delete", args=(self.lesson.pk,))
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Lesson.objects.all().count(), 0)
+
 
     def test_lesson_list(self):
         url = reverse("lms:lesson_list")
@@ -72,11 +78,14 @@ class LessonTestCase(APITestCase):
         self.assertEqual(data, result)
 
 
+
+
 class SubscriptionTestCase(APITestCase):
     def setUp(self):
         self.user = User.objects.create(email="admin@example.com")
         self.course = Course.objects.create(title="Ботаника", description="Что-то про ботаников", owner=self.user)
         self.client.force_authenticate(user=self.user)
+
 
     def test_subscribe(self):
         url = reverse("lms:course_subscription")

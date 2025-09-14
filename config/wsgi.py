@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
 
 import os
 
+
 # Установите переменную окружения для SECRET_KEY (не рекомендуется для продакшн)
 os.environ['SECRET_KEY'] = 'NQBghmmXmpGd-6gzhWD20PmAeZGSjdjOscBHkkBwptd5NFR9Wi97KHKLKRZrR78aTjE'
 

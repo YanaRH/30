@@ -18,6 +18,7 @@ except Exception as e:
     warnings.warn(f"An error occurred while checking Django: {e}")
     raise  # Re-raise the exception for any other errors
 
+
 # Create a new Celery application instance
 app = Celery('your_project_name')  # Replace with your project name
 

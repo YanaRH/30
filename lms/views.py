@@ -1,14 +1,25 @@
-from rest_framework import viewsets
-from .models import Course
-from .serializers import CourseSerializer
+from rest_framework import viewsets, permissions
+from .models import Course, Lesson
+from .serializers import CourseSerializer, LessonSerializer
+
+
 
 class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = CourseSerializer
-
+    permission_classes = [permissions.IsAuthenticated]
     def get_queryset(self):
-        return Course.objects.filter(user=self.request.user)
+        # Фильтруем курсы текущего пользователя
+        return Course.objects.filter(owner=self.request.user)
+    
+    
+    
+class LessonViewSet(viewsets.ModelViewSet):
+    serializer_class = LessonSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    def get_queryset(self):
+        # Фильтруем уроки текущего пользователя
+        return Lesson.objects.filter(owner=self.request.user)
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
 
-
+class UserViewSet:
+    pass

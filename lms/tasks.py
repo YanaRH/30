@@ -4,14 +4,16 @@ import pytz
 from celery import shared_task
 from django.core.mail import send_mail
 from config.settings import EMAIL_HOST_USER
-
 from lms.models import Course, Subscription
 from users.models import User
+
+
 
 
 @shared_task
 def check_last_update_date(pk):
     current_date = datetime.datetime.now()  # Текущая дата
+
 
     course = Course.objects.get(pk=pk)
 
@@ -50,10 +52,14 @@ def check_last_update_date(pk):
                     )
 
 
+
+
 @shared_task
 def privet(pk):
     print("***** ВСЕМ ПРИВЕТ! *****")
     # print(pk)
+
+
 
 
 @shared_task
